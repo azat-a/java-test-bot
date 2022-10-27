@@ -5,3 +5,7 @@ spring:
     driverClassName: org.h2.Driver
     username: ${DB_USER:user}
     password: ${DB_PASS:pass}
+telegram:
+  bot:
+    username: SimohinJavaTestBot
+    token: ${TELEGRAM_BOT_TOKEN:token}
