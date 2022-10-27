@@ -49,11 +49,8 @@ class TelegramBot(
         AnswerCallbackQuery(this.callbackQuery.id).apply {
             var base = "https://simohin-test-bot.herokuapp.com/game"
             if (params.isNotEmpty()) {
-                base = "$base?"
-                params.forEach { (k, v) -> base = "$base$k=$v" }
+                params.map { (k, v) -> base = "$k=$v" }.joinToString("&").let { base = "$base?$it" }
             }
-
-            log.info { "url: $base" }
 
             url = base
         }
