@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam
 class GameController {
 
     @GetMapping
-    fun get(model: Model, @RequestParam gameShortName: String? = "NO GAME NAME"): String {
-        model.addAttribute("game", gameShortName)
+    fun get(model: Model, @RequestParam taskTemplate: String): String {
+        model.addAttribute("game", taskTemplate)
         return "game"
     }
 }
