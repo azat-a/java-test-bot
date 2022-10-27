@@ -8,12 +8,12 @@ import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
 import com.github.simohin.testbot.service.GameService
 import org.springframework.stereotype.Service
-import org.springframework.web.util.DefaultUriBuilderFactory
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery
 import org.telegram.telegrambots.meta.api.methods.send.SendGame
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
+import java.util.logging.Logger
 
 @Service
 class TelegramBot(
@@ -22,6 +22,11 @@ class TelegramBot(
     private val gameRepository: GameRepository,
     private val userResultRepository: UserResultRepository
 ) : TelegramLongPollingBot() {
+
+    companion object {
+        private val log = Logger.getLogger(TelegramBot::class.simpleName)
+    }
+
     override fun getBotToken() = botProperties.token
 
     override fun getBotUsername() = botProperties.userName
@@ -42,10 +47,15 @@ class TelegramBot(
 
     private fun Update.toAnswerCallbackQuery(params: Map<String, Any?>) =
         AnswerCallbackQuery(this.callbackQuery.id).apply {
-            url = DefaultUriBuilderFactory()
-                .uriString("https://simohin-test-bot.herokuapp.com/game")
-                .build(params)
-                .toString()
+            var base = "https://simohin-test-bot.herokuapp.com/game"
+            if (params.isNotEmpty()) {
+                base = "$base?"
+                params.forEach { (k, v) -> base = "$base$k=$v" }
+            }
+
+            log.info { "url: $base" }
+
+            url = base
         }
 
     private fun getGame(userId: Long, chatId: String) {
