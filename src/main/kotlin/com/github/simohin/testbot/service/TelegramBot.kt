@@ -6,7 +6,6 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery
 import org.telegram.telegrambots.meta.api.methods.send.SendGame
 import org.telegram.telegrambots.meta.api.objects.Update
-import java.util.logging.Logger
 
 @Service
 class TelegramBot(
@@ -15,10 +14,6 @@ class TelegramBot(
     @Value("\${telegram.bot.token}")
     private val token: String
 ) : TelegramLongPollingBot() {
-
-    companion object {
-        private val log = Logger.getLogger(TelegramBot::class.simpleName)
-    }
 
     override fun getBotToken() = token
 
