@@ -52,6 +52,7 @@ class TelegramBot(
                 params.map { (k, v) -> base = "$k=$v" }.joinToString("&").let { base = "$base?$it" }
             }
 
+            log.info("Url: $base")
             url = base
         }
 
