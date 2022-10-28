@@ -29,16 +29,23 @@ class GameService(
                     //        Напишите алгоритм поиска в массиве nums индексов элементов, 
                     //        которые в сумме равны target
                         }
-                    
+
                         public static void main(String... args) {
-                            assertArrays(int[]{0,1}, twoSum(int[]{2,7,11,15}, 9));
-                            assertArrays(int[]{0,1}, twoSum(int[]{3,2,4}, 6));
-                            assertArrays(int[]{0,1}, twoSum(int[]{3,3}, 6));
+                            assertArrays(new int[]{0, 1}, twoSum(new int[]{2, 7, 11, 15}, 9));
+                            assertArrays(new int[]{0, 1}, twoSum(new int[]{3, 2, 4}, 6));
+                            assertArrays(new int[]{0, 1}, twoSum(new int[]{3, 3}, 6));
                         }
                     
-                        private static assertArrays(int[] expected, int[] actual) {
+                        private static void assertArrays(int[] expected, int[] actual) {
+                            if (expected.length != actual.length) {
+                                throw new RuntimeException("Result array has wrong length");
+                            }
                             for (int i = 0; i < expected.length; i++) {
-                                assert expected[i] == actual[i];
+                                if (expected[i] != actual[i]) {
+                                    throw new RuntimeException("Result array is wrong: " + i +
+                                            " element expected to be " + expected[i] +
+                                            " but was " + actual[i]);
+                                }
                             }
                         }
                     }
