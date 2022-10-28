@@ -10,8 +10,8 @@ import com.github.simohin.testbot.model.Task
 import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
 import org.springframework.stereotype.Service
+import java.io.File
 import javax.annotation.PostConstruct
-import kotlin.streams.asStream
 
 @Service
 class GameService(
@@ -21,10 +21,12 @@ class GameService(
 ) {
 
     @PostConstruct
-    fun init() = javaClass.classLoader.getResources("tasks").asSequence().asStream()
-        .map { mapper.readValue(it, Task::class.java) }
-        .map { GameEntity(it.template!!.trimIndent(), it.name!!) }
-        .forEach(gameRepository::save)
+    fun init() = javaClass.getResource("tasks")?.toURI()?.let {
+        File(it).listFiles()!!
+            .map { file -> mapper.readValue(file, Task::class.java) }
+            .map { task -> GameEntity(task.template!!.trimIndent(), task.name!!) }
+            .forEach(gameRepository::save)
+    }
 
     fun find(userId: Long, gameShortName: String): Game {
         val gameOptional = gameRepository.findByTemplateName(gameShortName)
