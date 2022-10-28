@@ -6,6 +6,7 @@ import javax.persistence.Id
 
 @Entity
 data class GameEntity(
+    val codeTemplate: String,
     val templateName: String,
     @Id
     @GeneratedValue

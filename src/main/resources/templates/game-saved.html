@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf Application - Bootstrap Code Editor</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/assets/prism/prism.css} "/>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 mt-5">
+            <pre><code th:class="${snippet.lang}" th:text="${snippet.code}"></code></pre>
+            <h1 th:text="${result.isCompileSuccess()}"></h1>
+            <h1 th:text="${result.isExecutionSuccess()}"></h1>
+            <h1 th:text="${result.makeLog}"></h1>
+            <h1 th:text="${result.execLog}"></h1>
+        </div>
+    </div>
+
+    <a th:href="@{/game}" class="btn btn-primary">Go back</a>
+</div>
+
+<script th:src="@{/assets/prism/prism.js}"></script>
+
+</body>
+</html>

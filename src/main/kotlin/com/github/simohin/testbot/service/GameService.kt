@@ -10,14 +10,29 @@ import javax.annotation.PostConstruct
 
 @Service
 class GameService(
-    val gameRepository: GameRepository,
-    val userResultRepository: UserResultRepository
+    private val gameRepository: GameRepository,
+    private val userResultRepository: UserResultRepository
 ) {
 
     @PostConstruct
     fun init() {
         gameRepository.findByTemplateName("coding")
-            .orElse(gameRepository.save(GameEntity("coding")))
+            .orElse(
+                gameRepository.save(
+                    GameEntity(
+                        """
+                public class main
+                {
+                	public static void main(String[] args)
+                    {
+                        System.out.println("Hello, world!");
+                    }
+                }
+            """.trimIndent(),
+                        "coding"
+                    )
+                )
+            )
     }
 
     fun find(userId: Long, gameShortName: String): Game {
@@ -27,7 +42,10 @@ class GameService(
         }
 
         val gameEntity = gameOptional.get()
-        val game = Game(gameEntity.templateName)
+        val game = Game(
+            gameEntity.templateName,
+            gameEntity.codeTemplate
+        )
 
         userResultRepository.findById(UserResultId(userId, gameEntity.id!!))
             .ifPresent {

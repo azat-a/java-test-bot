@@ -12,6 +12,12 @@ group = "com.github.simohin"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+val springCloudVersion = "2021.0.4"
+val springCloudOpenFeignVersion = "3.1.4"
+val telegramBotsVersion = "6.1.0"
+val webjarsBootstrapVersion = "5.2.2"
+val webjarsLocatorVersion = "0.45"
+
 repositories {
     mavenCentral()
 }
@@ -20,7 +26,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.telegram:telegrambots:6.1.0")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudOpenFeignVersion")
+    implementation("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+    implementation("org.webjars:bootstrap:$webjarsBootstrapVersion")
+    implementation("org.webjars:webjars-locator:$webjarsLocatorVersion")
+    implementation("org.telegram:telegrambots:$telegramBotsVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.h2database:h2")

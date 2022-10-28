@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Java",
+    "mime": "text/x-java",
+    "mode": "clike",
+    "ext": [
+      "java"
+    ]
+  }
+]

@@ -4,7 +4,7 @@ spring:
     url: jdbc:h2:mem:db
     driverClassName: org.h2.Driver
     username: ${DB_USER:user}
-    password: ${DB_PASS:pass}
+    password: ${DB_PASS:}
 telegram:
   bot:
     username: SimohinJavaTestBot
