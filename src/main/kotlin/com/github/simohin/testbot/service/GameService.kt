@@ -21,7 +21,7 @@ class GameService(
 ) {
 
     @PostConstruct
-    fun init() = javaClass.getResource("tasks")?.toURI()?.let {
+    fun init() = javaClass.getResource("/tasks")?.toURI()?.let {
         File(it).listFiles()!!
             .map { file -> mapper.readValue(file, Task::class.java) }
             .map { task -> GameEntity(task.template!!.trimIndent(), task.name!!) }
