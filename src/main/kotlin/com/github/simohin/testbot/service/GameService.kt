@@ -35,11 +35,13 @@ class GameService(
                     
                         public static void main(String... args) {
                             assertArrays(new int[]{0, 1}, twoSum(new int[]{2, 7, 11, 15}, 9));
-                            assertArrays(new int[]{0, 1}, twoSum(new int[]{3, 2, 4}, 6));
+                            assertArrays(new int[]{1, 2}, twoSum(new int[]{3, 2, 4}, 6));
                             assertArrays(new int[]{0, 1}, twoSum(new int[]{3, 3}, 6));
                         }
                     
                         private static void assertArrays(int[] expected, int[] actual) {
+                            Arrays.sort(expected);
+                            Arrays.sort(actual);
                             if (expected.length != actual.length) {
                                 throw new RuntimeException("Result array has wrong length");
                             }
