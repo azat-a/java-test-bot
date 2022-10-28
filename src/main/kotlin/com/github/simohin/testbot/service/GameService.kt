@@ -9,10 +9,8 @@ import com.github.simohin.testbot.model.Snippet
 import com.github.simohin.testbot.model.Task
 import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
-import org.springframework.core.io.Resource
 import org.springframework.core.io.support.ResourcePatternResolver
 import org.springframework.stereotype.Service
-import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
 @Service
@@ -24,18 +22,25 @@ class GameService(
 ) {
 
     companion object {
-        private val log = Logger.getLogger(GameService::class.simpleName)
+
+        private val tasks = listOf(
+            Task(
+                "coding",
+                """
+                    public class main {
+                        public static void main(String[] args) {
+                            System.out.println("Hello, world!");
+                        }
+                    }
+                """.trimIndent()
+            )
+        )
     }
 
     @PostConstruct
-    fun init() {
-        resourcePatternResolver.getResources("classpath:/tasks/*.json")
-            .filter(Resource::exists)
-            .onEach { log.info("Loading ${it.filename}") }
-            .map { resource -> mapper.readValue(resource.file, Task::class.java) }
-            .map { task -> GameEntity(task.template!!.trimIndent(), task.name!!) }
-            .forEach(gameRepository::save)
-    }
+    fun init() = tasks
+        .map { task -> GameEntity(task.template!!.trimIndent(), task.name!!) }
+        .forEach(gameRepository::save)
 
     fun find(userId: Long, gameShortName: String): Game {
         val gameOptional = gameRepository.findByTemplateName(gameShortName)
