@@ -96,8 +96,8 @@ class GameService(
                 userId,
                 gameEntityOptional.get().id!!,
                 true,
-                snippet.code!!,
-                userName
+                userName,
+                snippet.code!!
             )
         )
     }
