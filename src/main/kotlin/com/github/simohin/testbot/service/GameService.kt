@@ -23,13 +23,16 @@ class GameService(
             Task(
                 "twoSum",
                 """
+                    import java.util.*;
+                    
                     class Solution {
                     
+                        //Напишите алгоритм поиска в массиве nums индексов элементов, 
+                        //которые в сумме равны target
                         private static int[] twoSum(int[] nums, int target) {
-                    //        Напишите алгоритм поиска в массиве nums индексов элементов, 
-                    //        которые в сумме равны target
+                            return null;
                         }
-
+                    
                         public static void main(String... args) {
                             assertArrays(new int[]{0, 1}, twoSum(new int[]{2, 7, 11, 15}, 9));
                             assertArrays(new int[]{0, 1}, twoSum(new int[]{3, 2, 4}, 6));
