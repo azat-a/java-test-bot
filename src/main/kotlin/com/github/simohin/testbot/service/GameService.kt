@@ -9,21 +9,30 @@ import com.github.simohin.testbot.model.Snippet
 import com.github.simohin.testbot.model.Task
 import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
+import org.springframework.core.io.Resource
+import org.springframework.core.io.support.ResourcePatternResolver
 import org.springframework.stereotype.Service
-import java.io.File
+import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
 @Service
 class GameService(
     private val gameRepository: GameRepository,
     private val userResultRepository: UserResultRepository,
-    private val mapper: ObjectMapper
+    private val mapper: ObjectMapper,
+    private val resourcePatternResolver: ResourcePatternResolver
 ) {
 
+    companion object {
+        private val log = Logger.getLogger(GameService::class.simpleName)
+    }
+
     @PostConstruct
-    fun init() = javaClass.getResource("/tasks")?.path!!.let {
-        File(it).listFiles()!!
-            .map { file -> mapper.readValue(file, Task::class.java) }
+    fun init() {
+        resourcePatternResolver.getResources("classpath:/tasks/*.json")
+            .filter(Resource::exists)
+            .onEach { log.info("Loading ${it.filename}") }
+            .map { resource -> mapper.readValue(resource.file, Task::class.java) }
             .map { task -> GameEntity(task.template!!.trimIndent(), task.name!!) }
             .forEach(gameRepository::save)
     }
