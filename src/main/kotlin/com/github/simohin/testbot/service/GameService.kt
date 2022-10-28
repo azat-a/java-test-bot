@@ -21,11 +21,25 @@ class GameService(
 
         private val tasks = listOf(
             Task(
-                "coding",
+                "twoSum",
                 """
-                    public class main {
-                        public static void main(String[] args) {
-                            System.out.println("Hello, world!");
+                    class Solution {
+                    
+                        private static int[] twoSum(int[] nums, int target) {
+                    //        Напишите алгоритм поиска в массиве nums индексов элементов, 
+                    //        которые в сумме равны target
+                        }
+                    
+                        public static void main(String... args) {
+                            assertArrays(int[]{0,1}, twoSum(int[]{2,7,11,15}, 9));
+                            assertArrays(int[]{0,1}, twoSum(int[]{3,2,4}, 6));
+                            assertArrays(int[]{0,1}, twoSum(int[]{3,3}, 6));
+                        }
+                    
+                        private static assertArrays(int[] expected, int[] actual) {
+                            for (int i = 0; i < expected.length; i++) {
+                                assert expected[i] == actual[i];
+                            }
                         }
                     }
                 """.trimIndent()
