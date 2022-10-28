@@ -40,8 +40,11 @@ class TelegramBot(
             }
         }
         if (update.hasCallbackQuery()) {
-            val find = gameService.find(update.callbackQuery.from.id, update.callbackQuery.gameShortName)
-            execute(update.toAnswerCallbackQuery(find.toMap()))
+            val userId = update.callbackQuery.from.id
+            val game = gameService.find(userId, update.callbackQuery.gameShortName)
+            val params = game.toMap()
+            params["userId"] = userId
+            execute(update.toAnswerCallbackQuery(params))
         }
     }
 
