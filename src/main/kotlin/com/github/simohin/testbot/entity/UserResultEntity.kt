@@ -18,6 +18,6 @@ data class UserResultEntity(
 )
 
 data class UserResultId(
-    val userId: Long,
-    val gameId: Long,
+    val userId: Long? = null,
+    val gameId: Long? = null,
 ) : Serializable

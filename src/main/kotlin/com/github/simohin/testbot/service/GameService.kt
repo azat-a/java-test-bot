@@ -1,6 +1,5 @@
 package com.github.simohin.testbot.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.simohin.testbot.entity.GameEntity
 import com.github.simohin.testbot.entity.UserResultEntity
 import com.github.simohin.testbot.entity.UserResultId
@@ -9,16 +8,13 @@ import com.github.simohin.testbot.model.Snippet
 import com.github.simohin.testbot.model.Task
 import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
-import org.springframework.core.io.support.ResourcePatternResolver
 import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
 
 @Service
 class GameService(
     private val gameRepository: GameRepository,
-    private val userResultRepository: UserResultRepository,
-    private val mapper: ObjectMapper,
-    private val resourcePatternResolver: ResourcePatternResolver
+    private val userResultRepository: UserResultRepository
 ) {
 
     companion object {
