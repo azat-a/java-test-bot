@@ -25,7 +25,7 @@ class GameService(
                 """
                     import java.util.*;
                     
-                    class Solution {
+                    class main {
                     
                         //Напишите алгоритм поиска в массиве nums индексов элементов, 
                         //которые в сумме равны target
