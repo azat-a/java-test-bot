@@ -10,7 +10,9 @@ import java.util.Locale
 import java.util.logging.Logger
 
 @Component
-class MimeToLang {
+class MimeToLang(
+    private val mapper: ObjectMapper
+) {
 
     companion object {
         private val log = Logger.getLogger(MimeToLang::class.simpleName)
@@ -36,15 +38,12 @@ class MimeToLang {
             .lowercase(Locale.getDefault())
     }
 
-    private fun loadModeInfo(): List<ModeInfo?> {
-        val objectMapper = ObjectMapper()
-        try {
-            return objectMapper.readValue(javaClass.classLoader
-                .getResourceAsStream("mime.json"),
-                object : TypeReference<List<ModeInfo?>?>() {})!!
-        } catch (e: IOException) {
-            log.warning(e.message)
-        }
-        return Collections.emptyList()
+    private fun loadModeInfo() = try {
+        mapper.readValue(javaClass.classLoader
+            .getResourceAsStream("mime.json"),
+            object : TypeReference<List<ModeInfo?>?>() {})!!
+    } catch (e: IOException) {
+        log.warning(e.message)
+        Collections.emptyList()
     }
 }

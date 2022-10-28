@@ -1,0 +1,4 @@
+{
+  "name": "coding",
+  "template": "public class main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, world!\");\n    }\n}"
+}
