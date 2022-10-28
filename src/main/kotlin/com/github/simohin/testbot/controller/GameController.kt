@@ -16,21 +16,38 @@ import org.springframework.web.bind.annotation.RequestParam
 class GameController(
     private val mimeToLang: MimeToLang,
     private val onlineCompileService: OnlineCompileService,
-    private val gameService: GameService
+    private val gameService: GameService,
 ) {
 
     @GetMapping
-    fun get(model: Model, @RequestParam userId: Long, @RequestParam taskTemplate: String): String {
+    fun get(
+        model: Model,
+        @RequestParam userId: Long,
+        @RequestParam userName: String,
+        @RequestParam taskTemplate: String
+    ): String {
         val game = gameService.find(userId, taskTemplate)
         model.addAttribute("snippet", Snippet(code = game.codeTemplate))
         return "game"
     }
 
     @PostMapping
-    fun save(model: Model, snippet: Snippet): String {
+    fun save(
+        model: Model,
+        snippet: Snippet,
+        @RequestParam userId: Long,
+        @RequestParam userName: String,
+        @RequestParam taskTemplate: String
+    ): String {
         snippet.lang = "language-" + mimeToLang.getLangByMime(snippet.mime)
         model.addAttribute("snippet", snippet)
-        model.addAttribute("result", onlineCompileService.checkCode(snippet.code!!))
-        return "game-saved"
+        val result = onlineCompileService.checkCode(snippet.code!!)
+
+        if (result.isCompileSuccess() && result.isExecutionSuccess()) {
+            gameService.saveResult(userId, userName, taskTemplate, snippet)
+            return "game-saved"
+        }
+        model.addAttribute("result", result)
+        return "game-failed"
     }
 }

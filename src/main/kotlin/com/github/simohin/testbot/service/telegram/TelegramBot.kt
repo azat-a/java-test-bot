@@ -23,10 +23,6 @@ class TelegramBot(
     private val userResultRepository: UserResultRepository
 ) : TelegramLongPollingBot() {
 
-    companion object {
-        private val log = Logger.getLogger(TelegramBot::class.simpleName)
-    }
-
     override fun getBotToken() = botProperties.token
 
     override fun getBotUsername() = botProperties.userName
@@ -40,10 +36,11 @@ class TelegramBot(
             }
         }
         if (update.hasCallbackQuery()) {
-            val userId = update.callbackQuery.from.id
-            val game = gameService.find(userId, update.callbackQuery.gameShortName)
+            val user = update.callbackQuery.from
+            val game = gameService.find(user.id, update.callbackQuery.gameShortName)
             val params = game.toMap()
-            params["userId"] = userId
+            params["userId"] = user.id
+            params["userName"] = user.userName
             execute(update.toAnswerCallbackQuery(params))
         }
     }

@@ -13,8 +13,11 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12 mt-5">
-            <h1>Решение сохранено</h1>
-            <pre><code th:class="${snippet.lang}" th:text="${snippet.code}"></code></pre>
+            <H1>Неверно</H1>
+            <h2>Лог компилятора:</h2>
+            <h3 th:text="${result.makeLog}"></h3>
+            <h2>Лог ваполнения:</h2>
+            <h3 th:text="${result.execLog}"></h3>
         </div>
     </div>
 </div>

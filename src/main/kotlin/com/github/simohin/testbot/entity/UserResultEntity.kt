@@ -13,6 +13,7 @@ data class UserResultEntity(
     @Id
     val gameId: Long,
     val success: Boolean,
+    val userName: String,
     val solution: String
 )
 
