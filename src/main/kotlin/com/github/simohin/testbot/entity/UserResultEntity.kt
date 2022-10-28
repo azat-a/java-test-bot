@@ -1,6 +1,7 @@
 package com.github.simohin.testbot.entity
 
 import java.io.Serializable
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.IdClass
@@ -14,6 +15,7 @@ data class UserResultEntity(
     val gameId: Long,
     val success: Boolean,
     val userName: String,
+    @Column(columnDefinition = "TEXT")
     val solution: String
 )
 
