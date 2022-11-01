@@ -167,7 +167,7 @@ class GameService(
                     class Solution {
                     
                         //    Реализуйте метод, который возвращает отфильтрованный массив объектов
-                    //    с применением реализации интерфейса Filter
+                        //    с применением реализации интерфейса Filter
                         public static Object[] filter(Object[] values, Filter filter) {
                             return null;
                         }
