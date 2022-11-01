@@ -41,7 +41,12 @@ class GameController(
     ): String {
         snippet.lang = "language-" + mimeToLang.getLangByMime(snippet.mime)
         model.addAttribute("snippet", snippet)
-        val result = onlineCompileService.checkCode(snippet.code!!)
+
+        val game = gameService.find(userId, taskTemplate)
+        val result = onlineCompileService.checkCode("""
+            ${game.codeExecution}
+            ${snippet.code}
+        """.trimIndent())
 
         if (result.isCompileSuccess() && result.isExecutionSuccess()) {
             gameService.saveResult(userId, userName, taskTemplate, snippet)

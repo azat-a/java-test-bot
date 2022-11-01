@@ -8,6 +8,8 @@ import javax.persistence.Id
 @Entity
 data class GameEntity(
     @Column(columnDefinition = "TEXT")
+    val codeExecution: String,
+    @Column(columnDefinition = "TEXT")
     val codeTemplate: String,
     val templateName: String,
     @Id

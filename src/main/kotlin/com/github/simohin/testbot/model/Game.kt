@@ -3,6 +3,7 @@ package com.github.simohin.testbot.model
 data class Game(
     val taskTemplate: String,
     val codeTemplate: String,
+    val codeExecution: String,
     var passed: Boolean? = false
 )
 
