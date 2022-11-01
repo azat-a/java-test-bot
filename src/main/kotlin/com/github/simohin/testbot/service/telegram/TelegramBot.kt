@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery
 import org.telegram.telegrambots.meta.api.methods.send.SendGame
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
-import java.util.logging.Logger
 
 @Service
 class TelegramBot(
@@ -47,7 +46,7 @@ class TelegramBot(
 
     private fun Update.toAnswerCallbackQuery(params: Map<String, Any?>) =
         AnswerCallbackQuery(this.callbackQuery.id).apply {
-            var base = "https://simohin-test-bot.herokuapp.com/game"
+            var base = botProperties.baseUrl
             if (params.isNotEmpty()) {
                 params.map { (k, v) -> "$k=$v" }.joinToString("&").let { base = "$base?$it" }
             }

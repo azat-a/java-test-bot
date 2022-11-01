@@ -129,32 +129,66 @@ class GameService(
             Task(
                 "exceptions",
                 """
-                    class Solution {
-                    
-                        //Какая проблема возникнет с этим кодом? Исправьте код и напишите комментарий с коротким объяснением
-                        public static void handleExceptions() {
-                            try {
-                                foo();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    
-                        private static void foo() throws IOException,FileNotFoundException {
-                    
-                        }
-                    
-                    } 
+                    //Реализуйте ниже три класса-наследника CelsiusConverter, KelvinConverter, FahrenheitConverter
+                    interface Converter {
+                        Double getConvertedValue(double baseValue);
+                    }
                 """.trimIndent(),
                 """
-                    import java.io.*;
-                    
                     class main {
                     
                         public static void main(String... args) {
-                            Solution.handleExceptions();
+                            assertTemperature(new CelsiusConverter(), 1, 1);
+                            assertTemperature(new KelvinConverter(), 1, 274.15);
+                            assertTemperature(new FahrenheitConverter(), 1, 33.8);
+                            assertTemperature(new CelsiusConverter(), 100, 100);
+                            assertTemperature(new KelvinConverter(), 100, 373.15);
+                            assertTemperature(new FahrenheitConverter(), 100, 212);
+                        }
+                    
+                        private static void assertTemperature(Converter converter, double value, double expected) {
+                            double converted = converter.getConvertedValue(value);
+                            if (expected != converted) {
+                                throw new RuntimeException("Result is wrong: expected to be " + expected +
+                                        " but was " + converted);
+                            }
+                        }
+                    
+                    }
+                """.trimIndent()
+            ),
+            Task(
+                "exceptions",
+                """
+                    interface Filter {
+                        boolean apply(Object o);
+                    }
+                    
+                    class Solution {
+                    
+                    //    Реализуйте метод, который возвращает отфильтрованный массив объектов 
+                    //    с применением реализации интерфейса Filter
+                        public static Object[] filter(Object[] values, Filter) {
+                            return null;
+                        }
+                    
+                    //    Реализуйте метод, который возвращает имплементацию интерфейса Filter
+                        public static Filter getFilter() {
+                            return null;
+                        }
+                    }
+                """.trimIndent(),
+                """
+                    class main {
+
+                        public static void main(String... args) {
+                            String[] array = new String[]{"1rewf ", "feefewf", "a", null, "1"};
+                    
+                            String[] newArray = (String[]) Solution.filter(array, Solution.getFilter());
+                    
+                            if (!array.equals(newArray)) {
+                                throw new RuntimeException("Unexpected result")
+                            }
                         }
                     
                     }

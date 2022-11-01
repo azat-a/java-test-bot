@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component
 class TelegramBotProperties {
     lateinit var token: String
     lateinit var userName: String
+    lateinit var baseUrl: String
 }

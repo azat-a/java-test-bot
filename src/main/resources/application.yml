@@ -7,5 +7,6 @@ spring:
     password: ${DB_PASS:}
 telegram:
   bot:
-    username: SimohinJavaTestBot
+    username: ${TELEGRAM_BOT_USERNAME:username}
     token: ${TELEGRAM_BOT_TOKEN:token}
+    baseUrl: ${TELEGRAM_BOT_BASE_URL:http://localhost}
