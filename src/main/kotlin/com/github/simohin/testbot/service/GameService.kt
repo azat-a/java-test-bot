@@ -180,7 +180,7 @@ class GameService(
                 """.trimIndent(),
                 """
                     import java.util.*;
-
+                    
                     class main {
                     
                         public static void main(String... args) {
@@ -188,7 +188,7 @@ class GameService(
                     
                             String[] newArray = (String[]) Solution.filter(array, Solution.getFilter());
                     
-                            if (!Arrays.equals(array, newArray)) {
+                            if (!Arrays.equals(new String[]{"1rewf ", "feefewf", "a", "1"}, newArray)) {
                                 throw new RuntimeException("Unexpected result");
                             }
                         }
