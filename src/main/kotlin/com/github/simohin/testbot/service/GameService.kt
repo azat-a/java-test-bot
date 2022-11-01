@@ -166,28 +166,30 @@ class GameService(
                     
                     class Solution {
                     
-                    //    Реализуйте метод, который возвращает отфильтрованный массив объектов 
+                        //    Реализуйте метод, который возвращает отфильтрованный массив объектов
                     //    с применением реализации интерфейса Filter
-                        public static Object[] filter(Object[] values, Filter) {
+                        public static Object[] filter(Object[] values, Filter filter) {
                             return null;
                         }
                     
-                    //    Реализуйте метод, который возвращает имплементацию интерфейса Filter
+                        //    Реализуйте метод, который возвращает имплементацию интерфейса Filter
                         public static Filter getFilter() {
                             return null;
                         }
                     }
                 """.trimIndent(),
                 """
-                    class main {
+                    import java.util.*;
 
+                    class main {
+                    
                         public static void main(String... args) {
                             String[] array = new String[]{"1rewf ", "feefewf", "a", null, "1"};
                     
                             String[] newArray = (String[]) Solution.filter(array, Solution.getFilter());
                     
-                            if (!array.equals(newArray)) {
-                                throw new RuntimeException("Unexpected result")
+                            if (!Arrays.equals(array, newArray)) {
+                                throw new RuntimeException("Unexpected result");
                             }
                         }
                     
