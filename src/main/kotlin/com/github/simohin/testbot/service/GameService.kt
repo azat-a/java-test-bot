@@ -127,7 +127,7 @@ class GameService(
                 """.trimIndent()
             ),
             Task(
-                "exceptions",
+                "temperatureConverter",
                 """
                     //Реализуйте ниже три класса-наследника CelsiusConverter, KelvinConverter, FahrenheitConverter
                     interface Converter {
@@ -158,7 +158,7 @@ class GameService(
                 """.trimIndent()
             ),
             Task(
-                "exceptions",
+                "filter",
                 """
                     interface Filter {
                         boolean apply(Object o);
