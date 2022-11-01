@@ -63,42 +63,6 @@ class GameService(
                 """.trimIndent()
             ),
             Task(
-                "exceptions",
-                """
-                    class Solution {
-                    
-                        //Какая проблема возникнет с этим кодом? Исправьте код и напишите комментарий с коротким объяснением
-                        public static void handleExceptions() {
-                            try {
-                                foo();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    
-                        private static void foo() throws IOException,FileNotFoundException {
-                    
-                        }
-                    
-                    } 
-                """.trimIndent(),
-                """
-                    import java.io.FileNotFoundException;
-                    import java.io.IOException;
-                    import java.util.*;
-                    
-                    class main {
-                    
-                        public static void main(String... args) {
-                            Solution.handleExceptions();
-                        }
-                    
-                    }
-                """.trimIndent()
-            ),
-            Task(
                 "frequencyMap",
                 """
                     class Solution {
@@ -124,6 +88,41 @@ class GameService(
                             }
                         }
 
+                    }
+                """.trimIndent()
+            ),
+            Task(
+                "exceptions",
+                """
+                    class Solution {
+                    
+                        //Какая проблема возникнет с этим кодом? Исправьте код и напишите комментарий с коротким объяснением
+                        public static void handleExceptions() {
+                            try {
+                                foo();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    
+                        private static void foo() throws IOException,FileNotFoundException {
+                    
+                        }
+                    
+                    } 
+                """.trimIndent(),
+                """
+                    import java.io.;
+                    import java.util.*;
+                    
+                    class main {
+                    
+                        public static void main(String... args) {
+                            Solution.handleExceptions();
+                        }
+                    
                     }
                 """.trimIndent()
             )
