@@ -65,19 +65,6 @@ class GameService(
             Task(
                 "exceptions",
                 """
-                   import java.io.FileNotFoundException;
-                    import java.io.IOException;
-                    import java.util.*;
-                    
-                    class main {
-                    
-                        public static void main(String... args) {
-                            Solution.handleExceptions();
-                        }
-                    
-                    } 
-                """.trimIndent(),
-                """
                     class Solution {
                     
                         //Какая проблема возникнет с этим кодом? Исправьте код и напишите комментарий с коротким объяснением
@@ -96,10 +83,34 @@ class GameService(
                         }
                     
                     } 
+                """.trimIndent(),
+                """
+                    import java.io.FileNotFoundException;
+                    import java.io.IOException;
+                    import java.util.*;
+                    
+                    class main {
+                    
+                        public static void main(String... args) {
+                            Solution.handleExceptions();
+                        }
+                    
+                    }
                 """.trimIndent()
             ),
             Task(
                 "frequencyMap",
+                """
+                    class Solution {
+
+                        //Постройте алгоритм, который возвращает частотный словарь букв, отсортированный по ключам
+                        //Например: привет - {в,1;е,1;и,1;п,1;р,1;т,1}
+                        public static Map<Character, Integer> frequencyMap(String text) {
+                            return Collections.emptyMap();
+                        }
+
+                    }
+                """.trimIndent(),
                 """
                     import java.util.*;
 
@@ -111,17 +122,6 @@ class GameService(
                             if (!equals) {
                                 throw new RuntimeException("Unexpected result");
                             }
-                        }
-
-                    }
-                """.trimIndent(),
-                """
-                    class Solution {
-
-                        //Постройте алгоритм, который возвращает частотный словарь букв, отсортированный по ключам
-                        //Например: привет - {в,1;е,1;и,1;п,1;р,1;т,1}
-                        public static Map<Character, Integer> frequencyMap(String text) {
-                            return Collections.emptyMap();
                         }
 
                     }
