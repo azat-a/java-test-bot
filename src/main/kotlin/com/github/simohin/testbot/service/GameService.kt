@@ -77,6 +77,7 @@ class GameService(
                 """.trimIndent(),
                 """
                     import java.util.*;
+                    import java.util.stream.*;
 
                     class main {
 
