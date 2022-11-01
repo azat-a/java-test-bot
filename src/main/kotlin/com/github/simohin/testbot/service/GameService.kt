@@ -28,17 +28,6 @@ class GameService(
                         //Напишите алгоритм поиска в массиве nums индексов элементов,
                         //которые в сумме равны target
                         public static int[] twoSum(int[] nums, int target) {
-                            var holder = new HashMap<Integer, Integer>();
-                    
-                            for (int i = 0; i < nums.length; i++) {
-                                var current = nums[i];
-                                var holded = holder.get(target - current);
-                                if (holded == null) {
-                                    holder.put(current, i);
-                                    continue;
-                                }
-                                return new int[]{holded, i};
-                            }
                             return new int[]{};
                         }
                     
@@ -68,6 +57,71 @@ class GameService(
                                             " but was " + actual[i]);
                                 }
                             }
+                        }
+
+                    }
+                """.trimIndent()
+            ),
+            Task(
+                "exceptions",
+                """
+                   import java.io.FileNotFoundException;
+                    import java.io.IOException;
+                    import java.util.*;
+                    
+                    class main {
+                    
+                        public static void main(String... args) {
+                            Solution.handleExceptions();
+                        }
+                    
+                    } 
+                """.trimIndent(),
+                """
+                    class Solution {
+                    
+                        //Какая проблема возникнет с этим кодом? Исправьте код и напишите комментарий с коротким объяснением
+                        public static void handleExceptions() {
+                            try {
+                                foo();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    
+                        private static void foo() throws IOException,FileNotFoundException {
+                    
+                        }
+                    
+                    } 
+                """.trimIndent()
+            ),
+            Task(
+                "frequencyMap",
+                """
+                    import java.util.*;
+
+                    class main {
+
+                        public static void main(String... args) {
+                            boolean equals = Map.of('в', 1, 'е', 1, 'и', 1, 'п', 1, 'р', 1, 'т', 1)
+                                    .equals(Solution.frequencyMap("привет"));
+                            if (!equals) {
+                                throw new RuntimeException("Unexpected result");
+                            }
+                        }
+
+                    }
+                """.trimIndent(),
+                """
+                    class Solution {
+
+                        //Постройте алгоритм, который возвращает частотный словарь букв, отсортированный по ключам
+                        //Например: привет - {в,1;е,1;и,1;п,1;р,1;т,1}
+                        public static Map<Character, Integer> frequencyMap(String text) {
+                            return Collections.emptyMap();
                         }
 
                     }
