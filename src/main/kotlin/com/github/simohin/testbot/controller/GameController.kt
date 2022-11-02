@@ -24,10 +24,13 @@ class GameController(
         model: Model,
         @RequestParam userId: Long,
         @RequestParam userName: String,
-        @RequestParam taskTemplate: String
+        @RequestParam taskTemplate: String,
+        @RequestParam(required = false) code: String? = null
     ): String {
-        val game = gameService.find(userId, taskTemplate)
-        model.addAttribute("snippet", Snippet(code = game.codeTemplate))
+        model.addAttribute(
+            "snippet",
+            Snippet(code = code ?: gameService.find(userId, taskTemplate).codeTemplate)
+        )
         return "game"
     }
 
@@ -43,16 +46,22 @@ class GameController(
         model.addAttribute("snippet", snippet)
 
         val game = gameService.find(userId, taskTemplate)
-        val result = onlineCompileService.checkCode("""
+        val result = onlineCompileService.checkCode(
+            """
             ${game.codeExecution}
             ${snippet.code}
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         if (result.isCompileSuccess() && result.isExecutionSuccess()) {
             gameService.saveResult(userId, userName, taskTemplate, snippet)
             return "game-saved"
         }
         model.addAttribute("result", result)
+        model.addAttribute("userId", userId)
+        model.addAttribute("userName", userName)
+        model.addAttribute("taskTemplate", taskTemplate)
+        model.addAttribute("code", snippet.code)
         return "game-failed"
     }
 }
