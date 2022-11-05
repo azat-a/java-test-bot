@@ -1,5 +1,6 @@
 package com.github.simohin.testbot.config
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Configuration
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.generics.LongPollingBot
@@ -8,6 +9,7 @@ import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
 @Configuration
+@ConditionalOnProperty(prefix = "telegram.bot", name = ["enabled"], havingValue = "true", matchIfMissing = true)
 class TelegramBotConfiguration(
     private val longPollingBots: List<LongPollingBot>
 ) {

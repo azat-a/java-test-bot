@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-@FeignClient(value = "onlineCompile", url = "https://www.compilejava.net/v1/")
+@FeignClient(value = "onlineCompile", url = "\${online.compile.client.url}")
 interface OnlineCompileClient {
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/compile"], produces = ["application/json"])

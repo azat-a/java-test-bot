@@ -8,16 +8,24 @@ import com.github.simohin.testbot.model.Snippet
 import com.github.simohin.testbot.model.Task
 import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
+import com.github.simohin.testbot.service.result.send.ResultSendService
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import java.util.logging.Logger
 import javax.annotation.PostConstruct
 
 @Service
 class GameService(
+    @Value("\${result.send.tries:100}")
+    private val sendResultTries: Long,
     private val gameRepository: GameRepository,
-    private val userResultRepository: UserResultRepository
+    private val userResultRepository: UserResultRepository,
+    private val resultSendService: ResultSendService
 ) {
 
     companion object {
+        private val log = Logger.getLogger(GameService::class.simpleName)
 
         private val tasks = listOf(
             Task(
@@ -241,5 +249,26 @@ class GameService(
                 snippet.code!!
             )
         )
+    }
+
+    @Scheduled(fixedDelayString = "\${result.send.schedule.delay}")
+    fun sendResults() {
+        val found = userResultRepository.getBySent(false)
+
+        log.info("Found ${found.size} user results for update")
+        val updated = found.filter {
+            val gameEntityOptional = gameRepository.findById(it.gameId)
+            if (gameEntityOptional.isEmpty) return@filter false
+
+            val gameEntity = gameEntityOptional.get()
+
+            return@filter resultSendService.send(gameEntity.templateName, it.userId)
+        }
+            .map {
+                it.sent = true
+                it
+            }
+        log.info("Updated ${updated.size} user results")
+        userResultRepository.saveAll(updated)
     }
 }

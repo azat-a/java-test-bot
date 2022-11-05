@@ -1,5 +1,6 @@
 package com.github.simohin.testbot.service.telegram
 
+import com.github.simohin.testbot.config.TelegramBotConfiguration
 import com.github.simohin.testbot.config.TelegramBotProperties
 import com.github.simohin.testbot.model.Command
 import com.github.simohin.testbot.model.getCommand
@@ -7,6 +8,7 @@ import com.github.simohin.testbot.model.toMap
 import com.github.simohin.testbot.repository.GameRepository
 import com.github.simohin.testbot.repository.UserResultRepository
 import com.github.simohin.testbot.service.GameService
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery
@@ -15,6 +17,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
 
 @Service
+@ConditionalOnBean(TelegramBotConfiguration::class)
 class TelegramBot(
     private val botProperties: TelegramBotProperties,
     private val gameService: GameService,

@@ -16,7 +16,8 @@ data class UserResultEntity(
     val success: Boolean,
     val userName: String,
     @Column(columnDefinition = "TEXT")
-    val solution: String
+    val solution: String,
+    var sent: Boolean? = false
 )
 
 data class UserResultId(

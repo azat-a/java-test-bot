@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 interface UserResultRepository : JpaRepository<UserResultEntity, UserResultId> {
 
     fun getByUserId(userId: Long): List<UserResultEntity>
+    fun getBySent(sent: Boolean): List<UserResultEntity>
 }
