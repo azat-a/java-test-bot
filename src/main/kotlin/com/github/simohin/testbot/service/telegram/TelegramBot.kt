@@ -39,22 +39,31 @@ class TelegramBot(
         }
         if (update.hasCallbackQuery()) {
             val user = update.callbackQuery.from
-            val game = gameService.find(user.id, update.callbackQuery.gameShortName)
-            val params = game.toMap()
-            params["userId"] = user.id
-            params["userName"] = user.userName
-            execute(update.toAnswerCallbackQuery(params))
+            getParams(user.id, user.userName, update.callbackQuery.gameShortName)
+            execute(update.toAnswerCallbackQuery(user.id, user.userName, update.callbackQuery.gameShortName))
         }
     }
 
-    private fun Update.toAnswerCallbackQuery(params: Map<String, Any?>) =
-        AnswerCallbackQuery(this.callbackQuery.id).apply {
-            var base = botProperties.baseUrl
-            if (params.isNotEmpty()) {
-                params.map { (k, v) -> "$k=$v" }.joinToString("&").let { base = "$base?$it" }
-            }
+    fun buildUrl(userId: Long, userName: String, gameShortName: String): String {
+        val params = getParams(userId, userName, gameShortName)
+        var result = botProperties.baseUrl
+        if (params.isNotEmpty()) {
+            params.map { (k, v) -> "$k=$v" }.joinToString("&").let { result = "$result?$it" }
+        }
+        return result
+    }
 
-            url = base
+    private fun getParams(userId: Long, userName: String, gameShortName: String): MutableMap<String, Any?> {
+        val game = gameService.find(userId, gameShortName)
+        val params = game.toMap()
+        params["userId"] = userId
+        params["userName"] = userName
+        return params
+    }
+
+    private fun Update.toAnswerCallbackQuery(userId: Long, userName: String, gameShortName: String) =
+        AnswerCallbackQuery(this.callbackQuery.id).apply {
+            url = buildUrl(userId, userName, gameShortName)
         }
 
     private fun getGame(userId: Long, chatId: String) {

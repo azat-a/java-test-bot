@@ -17,8 +17,6 @@ import javax.annotation.PostConstruct
 
 @Service
 class GameService(
-    @Value("\${result.send.tries:100}")
-    private val sendResultTries: Long,
     private val gameRepository: GameRepository,
     private val userResultRepository: UserResultRepository,
     private val resultSendService: ResultSendService
@@ -135,33 +133,54 @@ class GameService(
                 """.trimIndent()
             ),
             Task(
-                "temperatureConverter",
+                "exchanger",
                 """
-                    //Реализуйте ниже три класса-наследника CelsiusConverter, KelvinConverter, FahrenheitConverter
-                    interface Converter {
-                        Double getConvertedValue(double baseValue);
+                    //Реализуйте ниже интерфейс Exchanger
+                    interface Exchanger {
+
+                        //Задаёт пару валют и отношение между ними
+                        void setCurrencyPair(String currentCurrency, String targetCurrency, float quotientCurrentByTarget);
+
+                        //задаёт комиссию в %
+                        void setCommissionInPercent(float commissionInPercent);
+
+
+                        //Производит обмен с учетом отношения пары валют и комиссии. В случае отсутствия пары в памяти или комиссии (выдает RuntimeException)
+                        float makeAnExchange(String currentCurrency, String targetCurrency, float amountOfCurrent);
+                    }
+
+                    class ExchangerImpl implements Exchanger {
+
+                        @Override
+                        public void setCurrencyPair(String currentCurrency, String targetCurrency, float quotientCurrentByTarget) {
+                        }
+
+                        @Override
+                        public void setCommissionInPercent(float commissionInPercent) {
+                        }
+
+                        @Override
+                        public float makeAnExchange(String currentCurrency, String targetCurrency, float amountOfCurrent) {
+                        }
                     }
                 """.trimIndent(),
                 """
+                    import java.util.*;
+
                     class main {
-                    
+
                         public static void main(String... args) {
-                            assertTemperature(new CelsiusConverter(), 1, 1);
-                            assertTemperature(new KelvinConverter(), 1, 274.15);
-                            assertTemperature(new FahrenheitConverter(), 1, 33.8);
-                            assertTemperature(new CelsiusConverter(), 100, 100);
-                            assertTemperature(new KelvinConverter(), 100, 373.15);
-                            assertTemperature(new FahrenheitConverter(), 100, 212);
-                        }
-                    
-                        private static void assertTemperature(Converter converter, double value, double expected) {
-                            double converted = converter.getConvertedValue(value);
-                            if (expected != converted) {
+                            var exchanger = (Exchanger) new ExchangerImpl();
+                            exchanger.setCurrencyPair("USD", "EUR", 1.1F);
+                            exchanger.setCommissionInPercent(2.5F);
+                            float result = exchanger.makeAnExchange("USD", "EUR", 300);
+                            double expected = 321.75;
+                            if (result != expected) {
                                 throw new RuntimeException("Result is wrong: expected to be " + expected +
-                                        " but was " + converted);
+                                        " but was " + result);
                             }
                         }
-                    
+
                     }
                 """.trimIndent()
             ),
